@@ -304,6 +304,7 @@
     nav.tabs button .lbl{font-size:9.5px;letter-spacing:.02em}
     main{padding-bottom:96px}
     #toasts{bottom:calc(96px + env(safe-area-inset-bottom))}
+    .voicebadge{bottom:calc(104px + env(safe-area-inset-bottom))}
     .dash-2{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
@@ -312,15 +313,90 @@
     .stage.critical .readout{opacity:1;transform:none;color:var(--hot)}
     .status.run .led{opacity:1}
   }
+
+  /* ---------- Brand logo (sesé) ---------- */
+  .brand .logo{height:26px;width:auto;display:block;flex:none}
+  .brand .sep{width:1px;height:26px;background:var(--line-2);flex:none;margin:0 2px}
+  @media (max-width:520px){ .brand .logo{height:22px} .brand .sep,.brand .txt span{display:none} }
+
+  /* ---------- Subtimer setup ---------- */
+  .subbox{width:100%;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+    padding:16px 16px 4px;transition:border-color .2s,box-shadow .2s}
+  .subbox.on{border-color:color-mix(in srgb,var(--warn) 55%,transparent);
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--warn) 12%,transparent)}
+  .subbox .shead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:2px}
+  .subbox .shead .ttl{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14px}
+  .subbox .shead .ttl svg{width:17px;height:17px;color:var(--warn)}
+  .subbox .shead .cap{font-size:11.5px;color:var(--muted);margin-top:1px}
+  .subbody{max-height:0;overflow:hidden;opacity:0;transition:max-height .28s ease,opacity .2s,padding .28s}
+  .subbox.on .subbody{max-height:260px;opacity:1;padding-top:14px}
+  .subbody .row2{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;justify-content:center}
+  .subbody .mini{display:flex;flex-direction:column;align-items:center;gap:4px}
+  .subbody .mini input{width:66px;background:var(--panel-2);border:1px solid var(--line-2);border-radius:11px;
+    color:var(--ink);text-align:center;font-family:var(--mono);font-weight:700;font-size:24px;padding:8px 0;
+    font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+  .subbody .mini input::-webkit-outer-spin-button,.subbody .mini input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .subbody .mini small{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .subbody .mcolon{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--muted);padding-bottom:22px}
+  .subrepeat{display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:var(--ink-2);margin:14px 0 12px}
+
+  /* ---------- Memórias ---------- */
+  .memwrap{width:100%}
+  .memwrap .mtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .memwrap .mtop .lab{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .btn.tiny{padding:8px 13px;font-size:12.5px;border-radius:10px;gap:7px}
+  .btn.tiny svg{width:15px;height:15px}
+  .mems{display:flex;flex-wrap:wrap;gap:8px}
+  .memchip{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--panel);
+    color:var(--ink);border-radius:11px;padding:7px 8px 7px 13px;font-size:13px;transition:border-color .18s,background .18s}
+  .memchip:hover{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 8%,transparent)}
+  .memchip .mn{font-weight:600;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .memchip .md{font-family:var(--mono);font-size:12px;color:var(--warn)}
+  .memchip .mx{width:22px;height:22px;border-radius:7px;border:0;background:transparent;color:var(--muted);
+    display:grid;place-items:center;flex:none}
+  .memchip .mx:hover{color:var(--hot);background:rgba(255,86,71,.12)}
+  .memchip .mx svg{width:13px;height:13px}
+  .mems .empty{font-size:12.5px;color:var(--muted)}
+
+  /* ---------- Subtimer live (running view) ---------- */
+  .subline{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;
+    font-size:12.5px;color:var(--ink-2)}
+  .subline .dot{width:7px;height:7px;border-radius:50%;background:var(--warn);flex:none;
+    box-shadow:0 0 8px var(--warn)}
+  .subline b{font-family:var(--mono);font-weight:700;color:var(--warn);font-variant-numeric:tabular-nums}
+  .subline .mut{color:var(--muted)}
+  .avisos{width:min(92vw,520px);margin:2px auto 0;display:flex;flex-direction:column;gap:7px}
+  .avisos .ah{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+  .aviso{display:flex;align-items:center;gap:11px;padding:9px 13px;border:1px solid var(--line);
+    border-radius:11px;background:var(--panel);font-size:13px;animation:avin .35s cubic-bezier(.22,1,.36,1)}
+  .aviso .an{font-family:var(--mono);font-weight:700;color:var(--muted);font-size:12px;min-width:30px}
+  .aviso .amid{flex:1;color:var(--ink-2)}
+  .aviso .amid b{color:var(--ink)}
+  .aviso .aic{width:16px;height:16px;color:var(--warn);flex:none}
+  @keyframes avin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .subpulse{animation:subp .6s ease}
+  @keyframes subp{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--warn) 55%,transparent)}100%{box-shadow:0 0 0 16px transparent}}
+
+  /* ---------- Voice indicator ---------- */
+  .voicebadge{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:var(--z-toast);
+    display:none;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;
+    background:color-mix(in srgb,var(--warn) 16%,var(--panel));border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);
+    color:var(--ink);font-size:13px;font-weight:600;box-shadow:var(--shadow)}
+  .voicebadge.on{display:flex;animation:avin .3s ease}
+  .voicebadge .wave{display:flex;align-items:center;gap:3px}
+  .voicebadge .wave i{width:3px;height:12px;background:var(--warn);border-radius:2px;animation:wv 1s ease-in-out infinite}
+  .voicebadge .wave i:nth-child(2){animation-delay:.15s}
+  .voicebadge .wave i:nth-child(3){animation-delay:.3s}
+  .voicebadge .wave i:nth-child(4){animation-delay:.45s}
+  @keyframes wv{0%,100%{height:6px}50%{height:16px}}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="brand">
-    <span class="mk" aria-hidden="true">
-      <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="17.5" r="11" stroke="var(--accent)" stroke-width="2.4"/><path d="M16 17.5V10.5" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><path d="M12 3h8" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><path d="M24.5 8.5l2-2" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/></svg>
-    </span>
-    <div><b>CRONOS</b><span>Instrumento de tempo</span></div>
+    <img class="logo" src="data:image/png;base64,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" alt="Sesé" />
+    <span class="sep" aria-hidden="true"></span>
+    <div class="txt"><b>CRONOS</b><span>Instrumento de tempo</span></div>
   </div>
 
   <nav class="tabs" role="tablist" aria-label="Modos">
@@ -381,6 +457,38 @@
         </div>
         <div class="chips" id="t-presets"></div>
         <div class="field"><input class="inp" id="t-label" placeholder="Rótulo (ex.: Pomodoro, macarrão, alongamento)" maxlength="60"></div>
+
+        <!-- Subtimer -->
+        <div class="subbox" id="subbox">
+          <div class="shead">
+            <div>
+              <div class="ttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7.5"/><path d="M12 13V9M9.5 2.5h5"/><path d="M18.5 6.5l1.5-1.5"/></svg>Subtimer com aviso por voz</div>
+              <div class="cap">A cada intervalo, uma voz avisa o tempo que falta no timer principal (o delta).</div>
+            </div>
+            <label class="switch"><input type="checkbox" id="sub-on"><span class="tk"></span></label>
+          </div>
+          <div class="subbody">
+            <div class="row2">
+              <div class="mini"><input id="sub-m" inputmode="numeric" value="01" maxlength="2" aria-label="Minutos do subtimer"><small>min</small></div>
+              <span class="mcolon">:</span>
+              <div class="mini"><input id="sub-s" inputmode="numeric" value="00" maxlength="2" aria-label="Segundos do subtimer"><small>seg</small></div>
+            </div>
+            <div class="subrepeat">
+              <label class="switch"><input type="checkbox" id="sub-rep" checked><span class="tk"></span></label>
+              <span>Repetir o aviso a cada intervalo até o fim</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memórias de tempo -->
+        <div class="memwrap">
+          <div class="mtop">
+            <span class="lab">Memórias de tempo</span>
+            <button class="btn tiny" id="mem-save" title="Salvar a configuração atual"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Salvar tempo</button>
+          </div>
+          <div class="mems" id="mem-list"></div>
+        </div>
+
         <button class="btn primary wide" id="t-start">Iniciar temporizador</button>
       </div>
     </div>
@@ -394,6 +502,7 @@
           <div class="status" id="t-status"><span class="led"></span><span>Pronto</span></div>
         </div>
       </div>
+      <div class="subline" id="sub-line" style="display:none"><span class="dot"></span><span class="mut">Próximo aviso em</span> <b id="sub-next">00:00</b></div>
       <div class="controls">
         <button class="btn round" id="t-add" aria-label="Adicionar 1 minuto" title="+1 min">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -402,6 +511,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v6h6M3.5 15a9 9 0 1 0 1.4-7.7"/></svg></button>
       </div>
       <div class="hint"><kbd>Espaço</kbd> pausar/continuar · <kbd>R</kbd> reiniciar</div>
+      <div class="avisos" id="avisos"></div>
     </div>
   </section>
 
@@ -485,6 +595,23 @@
         </div>
       </div>
       <div class="srow">
+        <div><div style="font-weight:600">Aviso por voz</div><div class="cap">Fala o tempo restante nos avisos do subtimer</div></div>
+        <label class="switch"><input type="checkbox" id="set-voice" checked><span class="tk"></span></label>
+      </div>
+      <div class="srow">
+        <div style="flex:1"><div style="font-weight:600">Velocidade da voz</div><div class="cap">Ritmo da fala</div></div>
+        <input type="range" id="set-vrate" min="70" max="140" value="100">
+      </div>
+      <div class="srow">
+        <div style="flex:1"><div style="font-weight:600;margin-bottom:9px">Voz</div>
+          <select class="inp" id="set-voicepick"><option value="">Padrão do sistema</option></select>
+        </div>
+      </div>
+      <button class="btn" id="set-vtest" style="justify-content:center;margin-bottom:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 10v1a7 7 0 0 0 14 0v-1M12 19v3"/></svg>
+        Testar voz
+      </button>
+      <div class="srow">
         <div><div style="font-weight:600">Notificações</div><div class="cap">Aviso do navegador</div></div>
         <label class="switch"><input type="checkbox" id="set-notif"><span class="tk"></span></label>
       </div>
@@ -495,6 +622,8 @@
     </div>
   </div>
 </dialog>
+
+<div class="voicebadge" id="voicebadge" aria-hidden="true"><span class="wave"><i></i><i></i><i></i><i></i></span><span id="voicebadge-txt">Falando…</span></div>
 
 <div id="toasts" aria-live="polite"></div>
 
@@ -517,7 +646,7 @@ const store=(()=>{
 })();
 
 /* ---------- Settings ---------- */
-const settings=Object.assign({sound:true,vol:65,pattern:'sirene',notif:false},store.get('cronos_settings',{}));
+const settings=Object.assign({sound:true,vol:65,pattern:'sirene',notif:false,voice:true,vrate:100,voiceName:''},store.get('cronos_settings',{}));
 function saveSettings(){store.set('cronos_settings',settings);}
 
 /* ---------- Audio ---------- */
@@ -563,6 +692,51 @@ function requestNotif(){
   if(!('Notification'in window))return toast('Notificações não suportadas neste navegador');
   Notification.requestPermission().then(p=>{settings.notif=(p==='granted');saveSettings();syncSettingsUI();});
 }
+
+/* ---------- Voice (speech synthesis) ---------- */
+const spSupported=('speechSynthesis'in window)&&('SpeechSynthesisUtterance'in window);
+function spokenDur(ms){
+  const s=Math.max(0,Math.round(ms/1000));
+  if(s<=0)return'zero segundos';
+  const h=Math.floor(s/3600),m=Math.floor(s%3600/60),ss=s%60,parts=[];
+  if(h)parts.push(h+(h===1?' hora':' horas'));
+  if(m)parts.push(m+(m===1?' minuto':' minutos'));
+  if(ss)parts.push(ss+(ss===1?' segundo':' segundos'));
+  if(parts.length===1)return parts[0];
+  return parts.slice(0,-1).join(', ')+' e '+parts[parts.length-1];
+}
+const voice=(()=>{
+  let voices=[],hideT=null;
+  function refresh(){ if(!spSupported)return; voices=speechSynthesis.getVoices()||[]; populate(); }
+  function populate(){
+    const sel=$('#set-voicepick'); if(!sel)return;
+    const cur=settings.voiceName;
+    const pt=voices.filter(v=>/pt/i.test(v.lang));
+    const list=(pt.length?pt:voices);
+    sel.innerHTML='<option value="">Padrão do sistema</option>'+list.map(v=>`<option value="${esc(v.name)}">${esc(v.name)} — ${esc(v.lang)}</option>`).join('');
+    sel.value=cur||'';
+  }
+  function pick(){ if(settings.voiceName){const v=voices.find(v=>v.name===settings.voiceName);if(v)return v;} return voices.find(v=>/pt.?BR/i.test(v.lang))||voices.find(v=>/pt/i.test(v.lang))||null; }
+  function badge(on,txt){ const b=$('#voicebadge'); if(!b)return; if(on){$('#voicebadge-txt').textContent=txt||'Falando…';b.classList.add('on');} else b.classList.remove('on'); }
+  function speak(text,force){
+    if(!settings.voice&&!force)return; // voice off → silent; the avisos list still records the delta
+    if(!spSupported){ badge(true,text); clearTimeout(hideT); hideT=setTimeout(()=>badge(false),2200); return; }
+    try{
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text);
+      const v=pick(); if(v){u.voice=v;u.lang=v.lang;} else u.lang='pt-BR';
+      u.rate=Math.min(1.6,Math.max(0.6,(settings.vrate||100)/100));
+      u.volume=1; u.pitch=1;
+      u.onstart=()=>badge(true,text); u.onend=()=>badge(false); u.onerror=()=>badge(false);
+      speechSynthesis.speak(u);
+      // safety: hide badge even if events don't fire
+      clearTimeout(hideT); hideT=setTimeout(()=>badge(false),Math.min(9000,1500+text.length*90));
+    }catch(e){ badge(true,text); clearTimeout(hideT); hideT=setTimeout(()=>badge(false),2200); }
+  }
+  function test(){ speak('Aviso por voz ativado. Faltam 3 minutos e 30 segundos.',true); }
+  if(spSupported){ refresh(); if(typeof speechSynthesis.onvoiceschanged!=='undefined')speechSynthesis.addEventListener('voiceschanged',refresh); }
+  return{speak,test,refresh,populate};
+})();
 
 /* ---------- Toast ---------- */
 function toast(msg){
@@ -666,8 +840,11 @@ swReset.addEventListener('click',swDoReset);
    TIMER
 ============================================================ */
 const timer={running:false,endTs:0,remaining:0,duration:0,label:'',finished:false,to:null};
+const sub={on:false,interval:0,repeat:true,endTs:0,count:0,done:false,left:0};
 const tRead=$('#t-read'),tStatus=$('#t-status'),tMain=$('#t-main'),tRing=$('#t-ring'),tLive=$('#t-live-label');
 const tH=$('#t-h'),tM=$('#t-m'),tS=$('#t-s');
+const subLine=$('#sub-line'),subNext=$('#sub-next'),avisosEl=$('#avisos');
+const subM=$('#sub-m'),subS=$('#sub-s'),subOn=$('#sub-on'),subRep=$('#sub-rep');
 const PRESETS=[1,3,5,10,15,25,45,60];
 $('#t-presets').innerHTML=PRESETS.map(m=>`<button class="chip" data-min="${m}">${m<60?m+' min':'1 h'}</button>`).join('');
 $$('#t-presets .chip').forEach(c=>c.addEventListener('click',()=>{const m=+c.dataset.min;tH.value=pad(Math.floor(m/60));tM.value=pad(m%60);tS.value='00';}));
@@ -695,21 +872,30 @@ function startTimer(fromSetup){
     const d=readSetup();
     if(d<1000)return toast('Defina um tempo maior que zero');
     timer.duration=d;timer.remaining=d;timer.label=$('#t-label').value.trim();timer.finished=false;
+    // subtimer config
+    sub.on=subOn.checked;sub.repeat=subRep.checked;sub.interval=readSubInterval();
+    sub.count=0;sub.done=false;sub.left=0;sub.endTs=0;avisosEl.innerHTML='';
+    if(sub.on&&sub.interval<1000){sub.on=false;toast('Defina um subtimer maior que zero');}
+    if(sub.on&&sub.interval>=d){sub.on=false;toast('Subtimer ≥ timer: não haverá aviso');}
     $('#timer-setup').style.display='none';$('#timer-run').style.display='';
     tLive.textContent=timer.label;
     if(settings.notif&&'Notification'in window&&Notification.permission==='default')requestNotif();
   }
   timer.endTs=Date.now()+timer.remaining;timer.running=true;timer.finished=false;
   clearTimeout(timer.to);timer.to=setTimeout(finishTimer,timer.remaining);
+  subArm();
   tMain.textContent='Pausar';tStatus.className='status run';tStatus.lastElementChild.textContent='Contando';
 }
 function pauseTimer(){
   timer.remaining=Math.max(0,timer.endTs-Date.now());timer.running=false;clearTimeout(timer.to);
+  if(sub.on&&sub.endTs){sub.left=Math.max(0,sub.endTs-Date.now());sub.endTs=0;}
+  subLine.style.display='none';
   tMain.textContent='Continuar';tStatus.className='status';tStatus.lastElementChild.textContent='Pausado';
 }
 function timerToggle(){ if(timer.finished){resetTimer();return;} timer.running?pauseTimer():startTimer(false); }
 function resetTimer(){
   timer.running=false;timer.finished=false;clearTimeout(timer.to);
+  sub.endTs=0;sub.left=0;sub.count=0;sub.done=false;subLine.style.display='none';avisosEl.innerHTML='';
   $('#timer-run').style.display='none';$('#timer-setup').style.display='';
   $('.stage#timer-run').classList.remove('critical');
   document.title=DOC_TITLE;document.documentElement.style.setProperty('--accent','var(--warn)');
@@ -723,17 +909,89 @@ function addTimerMin(){
 function finishTimer(){
   if(timer.finished)return;
   timer.finished=true;timer.running=false;timer.remaining=0;clearTimeout(timer.to);
+  sub.endTs=0;subLine.style.display='none';
   tRead.textContent='00:00';tRing.style.strokeDashoffset='578';
   $('#timer-run').classList.remove('critical');
   tStatus.className='status';tStatus.lastElementChild.textContent='Concluído';tMain.textContent='Reiniciar';
   addHistory({type:'timer',label:timer.label||'Temporizador',ms:timer.duration,at:Date.now()});
   fireAlarm('TEMPO ESGOTADO',timer.label||('Temporizador de '+fmtDur(timer.duration)));
   notify('⏰ Tempo esgotado!',timer.label||('Temporizador de '+fmtDur(timer.duration)+' concluído'));
+  if(settings.voice)voice.speak('Tempo esgotado.'+(timer.label?' '+timer.label+'.':''));
 }
 $('#t-start').addEventListener('click',()=>startTimer(true));
 tMain.addEventListener('click',timerToggle);
 $('#t-reset').addEventListener('click',resetTimer);
 $('#t-add').addEventListener('click',addTimerMin);
+
+/* ---------- Subtimer (voice delta) ---------- */
+function readSubInterval(){return((parseInt(subM.value,10)||0)*60+(parseInt(subS.value,10)||0))*1000;}
+subOn.addEventListener('change',()=>{$('#subbox').classList.toggle('on',subOn.checked);});
+[subM,subS].forEach(inp=>inp.addEventListener('blur',()=>{let v=parseInt(inp.value.replace(/\D/g,''),10)||0;const max=inp===subM?99:59;inp.value=pad(Math.min(max,Math.max(0,v)));}));
+function subArm(){
+  if(!(sub.on&&timer.running)||sub.done){if(sub.done)subLine.style.display='none';return;}
+  const iv=sub.left>0?sub.left:sub.interval;sub.left=0;
+  if(iv<250){sub.endTs=0;return;}
+  if(Date.now()+iv<timer.endTs-200){sub.endTs=Date.now()+iv;subLine.style.display='';}
+  else{sub.endTs=0;subLine.style.display='none';}
+}
+function subTick(){
+  if(!(sub.on&&timer.running&&!timer.finished))return;
+  if(sub.endTs&&Date.now()>=sub.endTs){
+    if(Date.now()>=timer.endTs){sub.endTs=0;subLine.style.display='none';return;}
+    subFire();
+  }
+}
+function subFire(){
+  sub.count++;
+  const rem=tRemaining(),elapsed=Math.max(0,timer.duration-rem);
+  if(sub.repeat&&(timer.endTs-Date.now())>sub.interval+200){
+    do{sub.endTs+=sub.interval;}while(sub.endTs<=Date.now()+50&&sub.endTs<timer.endTs); // skip missed to avoid bursts
+  }else{sub.endTs=0;sub.done=true;subLine.style.display='none';}
+  const remTxt=rem>500?('Faltam '+spokenDur(rem)):'Tempo quase esgotado';
+  voice.speak((timer.label?timer.label+'. ':'')+remTxt+'.');
+  addAviso(sub.count,elapsed,rem);
+}
+function addAviso(n,elapsed,rem){
+  if(!avisosEl.querySelector('.ah'))avisosEl.innerHTML='<div class="ah">Avisos por voz — delta até o fim</div>';
+  const row=document.createElement('div');row.className='aviso';
+  row.innerHTML='<span class="an">#'+n+'</span>'
+    +'<svg class="aic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 10v1a7 7 0 0 0 14 0v-1M12 19v3"/></svg>'
+    +'<span class="amid">Decorridos <b>'+fmtTimer(elapsed)+'</b> · faltam <b>'+fmtTimer(rem)+'</b></span>';
+  avisosEl.querySelector('.ah').after(row);
+  const rows=avisosEl.querySelectorAll('.aviso');if(rows.length>12)rows[rows.length-1].remove();
+}
+
+/* ---------- Memórias de tempo ---------- */
+let memories=store.get('cronos_memories',[]);
+function saveMem(){store.set('cronos_memories',memories);}
+function renderMems(){
+  const box=$('#mem-list');
+  if(!memories.length){box.innerHTML='<span class="empty">Nenhuma memória ainda. Ajuste um tempo e toque em “Salvar tempo”.</span>';return;}
+  box.innerHTML=memories.map(m=>`<span class="memchip" data-id="${m.id}" role="button" tabindex="0" title="Carregar tempo"><span class="mn">${esc(m.name)}</span><span class="md">${fmtTimer(m.dur)}${m.subOn?' · sub '+fmtTimer(m.subInt):''}</span><button class="mx" data-del="${m.id}" aria-label="Excluir memória"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
+}
+function loadMem(id){
+  const m=memories.find(x=>x.id===id);if(!m)return;
+  const s=Math.round(m.dur/1000);
+  tH.value=pad(Math.floor(s/3600));tM.value=pad(Math.floor(s%3600/60));tS.value=pad(s%60);
+  $('#t-label').value=m.name||'';
+  subOn.checked=!!m.subOn;subRep.checked=m.subRep!==false;
+  const si=Math.round((m.subInt||0)/1000);subM.value=pad(Math.floor(si/60));subS.value=pad(si%60);
+  $('#subbox').classList.toggle('on',subOn.checked);
+  toast('Memória carregada');
+}
+$('#mem-list').addEventListener('click',e=>{
+  const del=e.target.closest('[data-del]');
+  if(del){memories=memories.filter(m=>m.id!==del.dataset.del);saveMem();renderMems();toast('Memória excluída');return;}
+  const chip=e.target.closest('.memchip');if(chip)loadMem(chip.dataset.id);
+});
+$('#mem-list').addEventListener('keydown',e=>{if((e.key==='Enter'||e.code==='Space')){const chip=e.target.closest('.memchip');if(chip){e.preventDefault();loadMem(chip.dataset.id);}}});
+$('#mem-save').addEventListener('click',()=>{
+  const dur=readSetup();if(dur<1000)return toast('Defina um tempo para salvar');
+  const label=$('#t-label').value.trim();
+  const rec={id:Date.now()+'_'+Math.random().toString(36).slice(2,6),name:label||fmtTimer(dur),dur,subOn:subOn.checked,subInt:readSubInterval(),subRep:subRep.checked};
+  memories.unshift(rec);if(memories.length>24)memories.length=24;saveMem();renderMems();toast('Tempo salvo nas memórias');
+});
+renderMems();
 
 /* ============================================================
    COUNTDOWN (to date)
@@ -900,6 +1158,13 @@ const dlg=$('#dlg-settings');
 function syncSettingsUI(){
   $('#set-sound').checked=settings.sound;$('#set-vol').value=settings.vol;$('#set-pattern').value=settings.pattern;
   $('#set-notif').checked=settings.notif&&('Notification'in window)&&Notification.permission==='granted';
+  $('#set-voice').checked=settings.voice;$('#set-vrate').value=settings.vrate;
+  voice.populate();
+  if(!spSupported){
+    $('#set-voice').checked=false;$('#set-voice').disabled=true;
+    $('#set-vrate').disabled=true;$('#set-voicepick').disabled=true;
+    const cap=$('#set-voice').closest('.srow').querySelector('.cap');if(cap)cap.textContent='Voz não suportada neste navegador';
+  }
 }
 $('#btnSettings').addEventListener('click',()=>{audio.ensure();syncSettingsUI();dlg.showModal();});
 $('#dlg-close').addEventListener('click',()=>dlg.close());
@@ -909,6 +1174,10 @@ $('#set-vol').addEventListener('input',e=>{settings.vol=+e.target.value;saveSett
 $('#set-pattern').addEventListener('change',e=>{settings.pattern=e.target.value;saveSettings();});
 $('#set-notif').addEventListener('change',e=>{if(e.target.checked)requestNotif();else{settings.notif=false;saveSettings();}});
 $('#set-test').addEventListener('click',()=>{audio.ensure();audio.resume();audio.test();});
+$('#set-voice').addEventListener('change',e=>{settings.voice=e.target.checked;saveSettings();});
+$('#set-vrate').addEventListener('input',e=>{settings.vrate=+e.target.value;saveSettings();});
+$('#set-voicepick').addEventListener('change',e=>{settings.voiceName=e.target.value;saveSettings();});
+$('#set-vtest').addEventListener('click',()=>voice.test());
 
 /* ============================================================
    MAIN LOOP + ticks
@@ -928,11 +1197,13 @@ function renderTimerLive(){
   const crit=rem<=10000&&rem>0;
   $('#timer-run').classList.toggle('critical',crit);
   if(timer.running&&document.hidden===false)document.title='('+fmtTimer(rem)+') '+DOC_TITLE;
+  if(sub.on&&sub.endTs&&timer.running){subLine.style.display='';subNext.textContent=fmtTimer(Math.max(0,sub.endTs-Date.now()));}
 }
 function loop(){
   if(activeView==='stopwatch')renderStopwatch();
   else if(activeView==='timer'&&$('#timer-run').style.display!=='none')renderTimerLive();
   else if(activeView==='countdown')renderCountdowns();
+  subTick();
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
@@ -940,6 +1211,7 @@ requestAnimationFrame(loop);
 // 1s safety tick: fires countdown checks + keeps timer accurate even in background
 setInterval(()=>{
   checkCountdowns();
+  subTick();
   if(timer.running&&!timer.finished&&Date.now()>=timer.endTs)finishTimer();
   if(timer.running&&document.hidden)document.title='('+fmtTimer(tRemaining())+') '+DOC_TITLE;
 },1000);
