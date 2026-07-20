@@ -18,7 +18,7 @@
     --line:rgba(255,255,255,.075); --line-2:rgba(255,255,255,.13);
     --ink:#EBF2F7; --ink-2:#AEBCC8; --muted:#75838F;
     --cool:#33D6CE; --warn:#F5B62E; --hot:#FF5647; --violet:#9B8CFF; --good:#46E5A0;
-    --accent:var(--cool); --accent-soft:rgba(51,214,206,.15);
+    --accent:var(--warn); --accent-soft:rgba(245,182,46,.15);
     --shadow:0 18px 50px -20px rgba(0,0,0,.75);
     --z-nav:20; --z-sticky:30; --z-dialog-back:60; --z-dialog:70; --z-alarm:90; --z-toast:100;
     --sans:'Space Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
@@ -65,20 +65,34 @@
   .gear:hover{color:var(--ink);border-color:var(--line-2)}
   .gear svg{width:19px;height:19px}
 
-  nav.tabs{display:flex;gap:6px;padding:4px;border-radius:14px;
+  nav.tabs{display:flex;align-items:center;gap:5px;padding:4px;border-radius:14px;
     background:var(--panel);border:1px solid var(--line)}
   nav.tabs button{
-    display:flex;align-items:center;gap:8px;
-    padding:9px 14px;border:0;border-radius:10px;background:transparent;
-    color:var(--ink-2);font-weight:600;font-size:13.5px;letter-spacing:.01em;
-    transition:color .18s, background .18s;
+    display:flex;align-items:center;gap:7px;
+    padding:8px 11px;border:1px solid transparent;border-radius:10px;background:transparent;
+    color:var(--muted);font-weight:600;font-size:12.5px;letter-spacing:.01em;opacity:.66;
+    transition:color .18s,background .18s,border-color .18s,opacity .18s,transform .18s,box-shadow .18s;
   }
-  nav.tabs button svg{width:17px;height:17px;flex:none}
+  nav.tabs button svg{width:16px;height:16px;flex:none}
   nav.tabs button .lbl{white-space:nowrap}
-  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button:hover{color:var(--ink-2);opacity:.92;background:rgba(255,255,255,.035)}
   nav.tabs button[aria-selected="true"]{
-    color:var(--bg);background:var(--accent);
-    box-shadow:0 6px 18px -8px color-mix(in srgb,var(--accent) 70%,transparent);
+    color:var(--ink);background:var(--panel-3);border-color:var(--line-2);opacity:1;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  nav.tabs button[data-view="timer"]{
+    position:relative;padding:11px 20px;border-color:color-mix(in srgb,var(--warn) 42%,transparent);
+    background:color-mix(in srgb,var(--warn) 11%,var(--panel));color:var(--warn);font-size:14px;font-weight:700;
+    opacity:1;box-shadow:0 10px 24px -15px color-mix(in srgb,var(--warn) 75%,transparent);
+  }
+  nav.tabs button[data-view="timer"] svg{width:20px;height:20px}
+  nav.tabs button[data-view="timer"]:hover{
+    color:var(--warn);background:color-mix(in srgb,var(--warn) 17%,var(--panel));
+    border-color:color-mix(in srgb,var(--warn) 62%,transparent);transform:translateY(-1px);
+  }
+  nav.tabs button[data-view="timer"][aria-selected="true"]{
+    color:#241700;background:linear-gradient(180deg,#FFD15A,var(--warn));border-color:transparent;
+    transform:translateY(-1px);box-shadow:0 13px 30px -12px color-mix(in srgb,var(--warn) 85%,transparent),inset 0 1px 0 rgba(255,255,255,.48);
   }
 
   /* ---------- Main / views ---------- */
@@ -298,10 +312,22 @@
       border-radius:0;border:0;border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));
       justify-content:space-around;gap:2px;
       background:linear-gradient(180deg,rgba(14,20,27,.85),rgba(11,15,20,.98));backdrop-filter:blur(14px)}
-    nav.tabs button{flex-direction:column;gap:4px;padding:6px 4px;font-size:10px;border-radius:12px;flex:1}
-    nav.tabs button svg{width:21px;height:21px}
-    nav.tabs button[aria-selected="true"]{background:transparent;color:var(--accent);box-shadow:none}
-    nav.tabs button .lbl{font-size:9.5px;letter-spacing:.02em}
+    nav.tabs button{flex-direction:column;gap:4px;padding:6px 3px;font-size:10px;border-radius:12px;flex:.9;opacity:.5}
+    nav.tabs button svg{width:20px;height:20px}
+    nav.tabs button[aria-selected="true"]{background:rgba(255,255,255,.055);color:var(--ink);border-color:transparent;box-shadow:none;opacity:.9}
+    nav.tabs button .lbl{font-size:9px;letter-spacing:.02em}
+    nav.tabs button[data-view="stopwatch"]{order:1}
+    nav.tabs button[data-view="countdown"]{order:2}
+    nav.tabs button[data-view="timer"]{
+      order:3;flex:1.25;min-height:62px;margin-top:-16px;padding:8px 6px;border:4px solid var(--bg);
+      border-radius:18px;background:linear-gradient(180deg,#FFD15A,var(--warn));color:#241700;
+      box-shadow:0 12px 28px -10px rgba(245,182,46,.72);transform:none;opacity:1;
+    }
+    nav.tabs button[data-view="timer"] svg{width:24px;height:24px}
+    nav.tabs button[data-view="timer"] .lbl{font-size:10px;font-weight:800}
+    nav.tabs button[data-view="timer"][aria-selected="true"]{color:#241700;transform:none;border-color:var(--bg)}
+    nav.tabs button[data-view="history"]{order:4}
+    nav.tabs button[data-view="dashboard"]{order:5}
     main{padding-bottom:96px}
     #toasts{bottom:calc(96px + env(safe-area-inset-bottom))}
     .voicebadge{bottom:calc(104px + env(safe-area-inset-bottom))}
@@ -312,6 +338,7 @@
     #alarm.on{background:radial-gradient(circle at 50% 40%,rgba(255,86,71,.35),rgba(11,15,20,.97))}
     .stage.critical .readout{opacity:1;transform:none;color:var(--hot)}
     .status.run .led{opacity:1}
+    body.interval-shake main,body.interval-shake header.top,body.interval-shake nav.tabs{animation:none}
   }
 
   /* ---------- Brand logo (sesé) ---------- */
@@ -319,7 +346,7 @@
   .brand .sep{width:1px;height:26px;background:var(--line-2);flex:none;margin:0 2px}
   @media (max-width:520px){ .brand .logo{height:22px} .brand .sep,.brand .txt span{display:none} }
 
-  /* ---------- Subtimer setup ---------- */
+  /* ---------- Configuração dos avisos ---------- */
   .subbox{width:100%;border:1px solid var(--line);border-radius:16px;background:var(--panel);
     padding:16px 16px 4px;transition:border-color .2s,box-shadow .2s}
   .subbox.on{border-color:color-mix(in srgb,var(--warn) 55%,transparent);
@@ -329,7 +356,7 @@
   .subbox .shead .ttl svg{width:17px;height:17px;color:var(--warn)}
   .subbox .shead .cap{font-size:11.5px;color:var(--muted);margin-top:1px}
   .subbody{max-height:0;overflow:hidden;opacity:0;transition:max-height .28s ease,opacity .2s,padding .28s}
-  .subbox.on .subbody{max-height:260px;opacity:1;padding-top:14px}
+  .subbox.on .subbody{max-height:410px;opacity:1;padding-top:14px}
   .subbody .row2{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;justify-content:center}
   .subbody .mini{display:flex;flex-direction:column;align-items:center;gap:4px}
   .subbody .mini input{width:66px;background:var(--panel-2);border:1px solid var(--line-2);border-radius:11px;
@@ -339,6 +366,29 @@
   .subbody .mini small{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
   .subbody .mcolon{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--muted);padding-bottom:22px}
   .subrepeat{display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:var(--ink-2);margin:14px 0 12px}
+  .submode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:2px 0 8px;padding:4px;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:12px}
+  .submode button{border:0;background:transparent;color:var(--ink-2);padding:10px 12px;border-radius:9px;
+    font-size:12.5px;font-weight:700;transition:background .18s,color .18s,box-shadow .18s}
+  .submode button.on{background:var(--warn);color:#171006;box-shadow:0 8px 20px -12px rgba(245,182,46,.8)}
+  .submode-help{text-align:center;color:var(--muted);font-size:12px;line-height:1.45;margin-bottom:14px}
+  .subfeedback{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;margin:14px 0 12px}
+  .feedback-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;
+    border:1px solid var(--line);background:var(--panel-2);color:var(--ink-2);font-size:11.5px;font-weight:600}
+  .feedback-pill svg{width:14px;height:14px;color:var(--warn)}
+
+  /* ---------- Aviso visual dos intervalos ---------- */
+  #interval-alert{position:fixed;inset:0;z-index:calc(var(--z-alarm) - 1);display:grid;place-items:center;
+    pointer-events:none;opacity:0;padding:24px;background:radial-gradient(circle at 50% 42%,rgba(245,182,46,.28),rgba(11,15,20,.12) 48%,transparent 72%)}
+  #interval-alert .box{min-width:min(360px,88vw);max-width:88vw;text-align:center;padding:22px 24px;border-radius:20px;
+    background:rgba(18,24,32,.94);border:1px solid rgba(245,182,46,.6);box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 42px rgba(245,182,46,.2)}
+  #interval-alert .ico{width:42px;height:42px;color:var(--warn);margin:0 auto 9px}
+  #interval-alert strong{display:block;color:var(--warn);font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+  #interval-alert span{display:block;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:clamp(1.25rem,5vw,1.8rem)}
+  #interval-alert.on{animation:intervalAlertShow 1.25s cubic-bezier(.22,1,.36,1)}
+  @keyframes intervalAlertShow{0%{opacity:0;transform:scale(.92)}12%{opacity:1;transform:scale(1.025)}28%{transform:scale(1)}78%{opacity:1}100%{opacity:0}}
+  body.interval-shake main,body.interval-shake header.top,body.interval-shake nav.tabs{animation:screenVibrate .42s linear}
+  @keyframes screenVibrate{0%,100%{transform:translate(0,0)}15%{transform:translate(-5px,2px)}30%{transform:translate(5px,-2px)}45%{transform:translate(-4px,-1px)}60%{transform:translate(4px,2px)}75%{transform:translate(-2px,0)}}
 
   /* ---------- Memórias ---------- */
   .memwrap{width:100%}
@@ -358,7 +408,7 @@
   .memchip .mx svg{width:13px;height:13px}
   .mems .empty{font-size:12.5px;color:var(--muted)}
 
-  /* ---------- Subtimer live (running view) ---------- */
+  /* ---------- Aviso ativo durante o temporizador ---------- */
   .subline{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;
     font-size:12.5px;color:var(--ink-2)}
   .subline .dot{width:7px;height:7px;border-radius:50%;background:var(--warn);flex:none;
@@ -389,6 +439,465 @@
   .voicebadge .wave i:nth-child(3){animation-delay:.3s}
   .voicebadge .wave i:nth-child(4){animation-delay:.45s}
   @keyframes wv{0%,100%{height:6px}50%{height:16px}}
+
+
+  /* Refinamento visual e organização da navegação */
+  header.top{
+    display:grid;
+    grid-template-columns:minmax(210px,1fr) auto minmax(52px,1fr);
+    align-items:center;
+    column-gap:24px;
+    min-height:72px;
+    padding:12px clamp(16px,3vw,34px);
+    background:linear-gradient(180deg,rgba(14,20,27,.97),rgba(11,15,20,.90));
+    border-bottom:1px solid rgba(255,255,255,.085);
+    box-shadow:0 14px 34px -28px rgba(0,0,0,.92);
+  }
+  .brand{
+    min-width:0;
+    max-width:320px;
+    padding-right:8px;
+  }
+  .brand .txt{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    line-height:1.08;
+  }
+  .brand .txt b,
+  .brand .txt span{
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  header.top > .gear{
+    justify-self:end;
+  }
+  nav.tabs{
+    justify-self:center;
+    min-width:0;
+    max-width:100%;
+    padding:5px;
+    gap:4px;
+    border-radius:17px;
+    background:linear-gradient(180deg,rgba(30,39,51,.82),rgba(18,24,32,.92));
+    border-color:rgba(255,255,255,.09);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 12px 30px -24px rgba(0,0,0,.9);
+  }
+  nav.tabs button{
+    min-height:48px;
+    gap:9px;
+    padding:7px 12px;
+    border-radius:12px;
+  }
+  nav.tabs button svg{
+    width:18px;
+    height:18px;
+  }
+  nav.tabs button .navcopy{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:2px;
+    line-height:1;
+  }
+  nav.tabs button .lbl{
+    display:block;
+    max-width:100%;
+    white-space:normal;
+    overflow-wrap:normal;
+    font-size:12px;
+    font-weight:700;
+    line-height:1.08;
+  }
+  nav.tabs button .navsub{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.055em;
+    line-height:1.05;
+    white-space:nowrap;
+  }
+  nav.tabs button[aria-selected="true"] .navsub{
+    color:color-mix(in srgb,currentColor 68%,transparent);
+  }
+  nav.tabs button[data-view="timer"]{
+    min-height:52px;
+    padding:8px 16px;
+  }
+  nav.tabs button[data-view="timer"] .lbl{
+    font-size:13px;
+  }
+  nav.tabs button[data-view="timer"] .navsub{
+    color:color-mix(in srgb,var(--warn) 72%,var(--muted));
+  }
+  nav.tabs button[data-view="timer"][aria-selected="true"] .navsub{
+    color:rgba(36,23,0,.66);
+  }
+
+  @media (max-width:1120px) and (min-width:821px){
+    header.top{
+      grid-template-columns:minmax(0,1fr) 52px;
+      grid-template-areas:
+        "brand settings"
+        "navigation navigation";
+      row-gap:11px;
+      padding-top:12px;
+      padding-bottom:12px;
+    }
+    .brand{grid-area:brand;max-width:none}
+    header.top > .gear{grid-area:settings}
+    nav.tabs{
+      grid-area:navigation;
+      width:100%;
+      justify-self:stretch;
+      display:grid;
+      grid-template-columns:1.2fr repeat(4,minmax(0,1fr));
+    }
+    nav.tabs button{
+      width:100%;
+      justify-content:center;
+      padding-left:9px;
+      padding-right:9px;
+    }
+  }
+
+  @media (max-width:820px){
+    header.top{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 44px;
+      min-height:66px;
+      padding:10px 14px;
+      column-gap:12px;
+      background:linear-gradient(180deg,rgba(14,20,27,.98),rgba(11,15,20,.94));
+    }
+    .brand{
+      width:100%;
+      max-width:none;
+      gap:9px;
+      overflow:hidden;
+    }
+    .brand .logo{
+      height:24px;
+      max-width:112px;
+      object-fit:contain;
+    }
+    .brand .sep{
+      display:block;
+      height:28px;
+      margin:0 1px;
+    }
+    .brand .txt{
+      display:flex;
+      flex:1;
+      min-width:0;
+    }
+    .brand .txt b{
+      font-size:13px;
+      letter-spacing:.11em;
+    }
+    .brand .txt span{
+      display:block;
+      margin-top:3px;
+      font-size:8.5px;
+      letter-spacing:.12em;
+    }
+    header.top > .gear{
+      width:42px;
+      height:42px;
+      border-radius:13px;
+    }
+    nav.tabs{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      align-items:stretch;
+      justify-content:stretch;
+      gap:5px;
+      min-height:82px;
+      padding:7px 7px calc(7px + env(safe-area-inset-bottom));
+      background:linear-gradient(180deg,rgba(18,25,34,.96),rgba(9,13,18,.99));
+      box-shadow:0 -16px 38px -28px rgba(0,0,0,.95);
+    }
+    nav.tabs button,
+    nav.tabs button[data-view="timer"]{
+      order:initial;
+      width:100%;
+      min-width:0;
+      min-height:64px;
+      margin:0;
+      padding:6px 3px;
+      border-width:1px;
+      border-radius:14px;
+      transform:none;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      overflow:hidden;
+    }
+    nav.tabs button svg,
+    nav.tabs button[data-view="timer"] svg{
+      width:20px;
+      height:20px;
+    }
+    nav.tabs button .navcopy{
+      width:100%;
+      align-items:center;
+      gap:2px;
+      text-align:center;
+    }
+    nav.tabs button .lbl,
+    nav.tabs button[data-view="timer"] .lbl{
+      width:100%;
+      font-size:9.5px;
+      line-height:1.05;
+      white-space:normal;
+      overflow-wrap:anywhere;
+    }
+    nav.tabs button .navsub{
+      width:100%;
+      font-size:7.5px;
+      line-height:1;
+      letter-spacing:.025em;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    nav.tabs button[data-view="timer"]{
+      color:#241700;
+      background:linear-gradient(180deg,#FFD464,var(--warn));
+      border-color:rgba(255,209,90,.55);
+      box-shadow:0 8px 22px -12px rgba(245,182,46,.78),inset 0 1px 0 rgba(255,255,255,.42);
+      opacity:1;
+    }
+    nav.tabs button[data-view="timer"] .navsub,
+    nav.tabs button[data-view="timer"][aria-selected="true"] .navsub{
+      color:rgba(36,23,0,.64);
+    }
+    nav.tabs button[data-view="timer"][aria-selected="true"]{
+      border-color:#FFD76E;
+      box-shadow:0 9px 26px -12px rgba(245,182,46,.95),inset 0 1px 0 rgba(255,255,255,.55);
+    }
+    main{
+      padding-top:22px;
+      padding-bottom:calc(116px + env(safe-area-inset-bottom));
+    }
+    #toasts{bottom:calc(98px + env(safe-area-inset-bottom))}
+    .voicebadge{bottom:calc(104px + env(safe-area-inset-bottom))}
+  }
+
+  @media (max-width:390px){
+    .brand .logo{max-width:96px;height:22px}
+    .brand .txt b{font-size:12px}
+    .brand .txt span{font-size:7.8px;letter-spacing:.08em}
+    nav.tabs{gap:3px;padding-left:4px;padding-right:4px}
+    nav.tabs button,
+    nav.tabs button[data-view="timer"]{padding-left:2px;padding-right:2px}
+    nav.tabs button .lbl,
+    nav.tabs button[data-view="timer"] .lbl{font-size:8.7px}
+    nav.tabs button .navsub{font-size:7px}
+  }
+
+
+
+  /* ---------- Programação sempre aberta ---------- */
+  .subbox .subbody{
+    max-height:none;
+    overflow:visible;
+    opacity:1;
+    padding-top:14px;
+  }
+  .sub-open-badge{
+    flex:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:30px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid color-mix(in srgb,var(--warn) 42%,transparent);
+    background:color-mix(in srgb,var(--warn) 11%,var(--panel-2));
+    color:var(--warn);
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+
+  /* ---------- Assistente de uso ---------- */
+  .guide-launch{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:48;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-height:52px;
+    padding:9px 14px 9px 10px;
+    border:1px solid color-mix(in srgb,var(--cool) 38%,transparent);
+    border-radius:16px;
+    background:linear-gradient(145deg,color-mix(in srgb,var(--cool) 15%,var(--panel-2)),var(--panel));
+    color:var(--ink);
+    box-shadow:0 18px 46px -22px rgba(0,0,0,.92),0 0 0 1px rgba(255,255,255,.025) inset;
+  }
+  .guide-launch:hover{border-color:color-mix(in srgb,var(--cool) 62%,transparent);transform:translateY(-1px)}
+  .guide-launch .gicon{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+    display:grid;
+    place-items:center;
+    color:#04120f;
+    background:var(--cool);
+    box-shadow:0 8px 18px -10px rgba(51,214,206,.88);
+  }
+  .guide-launch .gicon svg{width:19px;height:19px}
+  .guide-launch .gcopy{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05}
+  .guide-launch .gcopy b{font-size:12.5px}
+  .guide-launch .gcopy small{font-size:10px;color:var(--muted);margin-top:4px}
+
+  .guide-agent{
+    position:fixed;
+    right:22px;
+    bottom:86px;
+    z-index:55;
+    width:min(390px,calc(100vw - 32px));
+    max-height:min(620px,calc(100dvh - 120px));
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    border:1px solid var(--line-2);
+    border-radius:22px;
+    background:linear-gradient(180deg,rgba(23,31,41,.985),rgba(14,20,27,.995));
+    box-shadow:0 28px 90px -30px rgba(0,0,0,.96),0 0 0 1px rgba(255,255,255,.025) inset;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(12px) scale(.98);
+    transform-origin:bottom right;
+    transition:opacity .22s ease,transform .22s ease,visibility .22s;
+  }
+  .guide-agent.open{opacity:1;visibility:visible;transform:none}
+  .guide-agent header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:16px 17px;
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(51,214,206,.06),transparent);
+  }
+  .guide-title{display:flex;align-items:center;gap:11px;min-width:0}
+  .guide-avatar{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    flex:none;
+    color:#04120f;
+    background:var(--cool);
+  }
+  .guide-avatar svg{width:21px;height:21px}
+  .guide-title b{display:block;font-size:14px}
+  .guide-title span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+  .guide-close{
+    width:34px;
+    height:34px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--panel);
+    color:var(--ink-2);
+    display:grid;
+    place-items:center;
+    flex:none;
+  }
+  .guide-close:hover{color:var(--ink);border-color:var(--line-2)}
+  .guide-close svg{width:16px;height:16px}
+  .guide-body{padding:18px 18px 14px;overflow:auto}
+  .guide-step-label{font-size:10.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--cool)}
+  .guide-body h3{font-size:20px;line-height:1.2;margin:8px 0 9px;color:var(--ink)}
+  .guide-body p{font-size:13.5px;line-height:1.62;margin:0;color:var(--ink-2)}
+  .guide-tip{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    margin-top:14px;
+    padding:11px 12px;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:var(--panel);
+    color:var(--muted);
+    font-size:11.5px;
+    line-height:1.45;
+  }
+  .guide-tip svg{width:16px;height:16px;flex:none;color:var(--warn);margin-top:1px}
+  .guide-progress{display:flex;gap:6px;margin-top:18px}
+  .guide-progress i{height:4px;flex:1;border-radius:99px;background:var(--panel-3);transition:background .2s,transform .2s}
+  .guide-progress i.on{background:var(--cool);transform:scaleY(1.35)}
+  .guide-actions{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:8px;
+    padding:13px 15px 15px;
+    border-top:1px solid var(--line);
+  }
+  .guide-btn{
+    min-height:40px;
+    border:1px solid var(--line);
+    border-radius:11px;
+    background:var(--panel);
+    color:var(--ink-2);
+    padding:9px 12px;
+    font-size:12px;
+    font-weight:700;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+  }
+  .guide-btn:hover{color:var(--ink);border-color:var(--line-2)}
+  .guide-btn svg{width:15px;height:15px}
+  .guide-btn.voice{justify-self:stretch}
+  .guide-btn.next{background:var(--cool);border-color:transparent;color:#04120f}
+  .guide-btn:disabled{opacity:.35;cursor:not-allowed}
+  .guide-highlight{position:relative;z-index:52;box-shadow:0 0 0 3px rgba(51,214,206,.38),0 0 34px rgba(51,214,206,.18)!important;border-radius:16px;transition:box-shadow .2s}
+
+  @media (max-width:820px){
+    .subbox .shead{align-items:flex-start}
+    .sub-open-badge{font-size:9px;padding:5px 8px}
+    .guide-launch{
+      right:12px;
+      bottom:calc(92px + env(safe-area-inset-bottom));
+      min-height:46px;
+      padding:6px;
+      border-radius:14px;
+    }
+    .guide-launch .gicon{width:34px;height:34px}
+    .guide-launch .gcopy{display:none}
+    .guide-agent{
+      left:8px;
+      right:8px;
+      bottom:calc(146px + env(safe-area-inset-bottom));
+      width:auto;
+      max-height:calc(100dvh - 170px);
+      transform-origin:bottom center;
+    }
+  }
+
+  @media (max-width:520px){
+    .subbox .shead{flex-direction:column;gap:9px}
+    .sub-open-badge{align-self:flex-start}
+  }
+
 </style>
 </head>
 <body>
@@ -400,16 +909,16 @@
   </div>
 
   <nav class="tabs" role="tablist" aria-label="Modos">
-    <button role="tab" data-view="stopwatch" aria-selected="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 13V8.5M9.5 2h5M18.5 6l1.5-1.5"/></svg><span class="lbl">Cronômetro</span></button>
-    <button role="tab" data-view="timer" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12M7 2c0 5 4 6 5 10 1-4 5-5 5-10M7 22c0-5 4-6 5-10 1 4 5 5 5 10"/></svg><span class="lbl">Timer</span></button>
+    <button role="tab" data-view="timer" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12M7 2c0 5 4 6 5 10 1-4 5-5 5-10M7 22c0-5 4-6 5-10 1 4 5 5 5 10"/></svg><span class="navcopy"><span class="lbl">Timer</span><span class="navsub">Principal</span></span></button>
+    <button role="tab" data-view="stopwatch" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 13V8.5M9.5 2h5M18.5 6l1.5-1.5"/></svg><span class="navcopy"><span class="lbl">Cronômetro</span><span class="navsub">Livre</span></span></button>
     <button role="tab" data-view="countdown" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4M8 14l3 3 5-6"/></svg><span class="lbl">Regressiva</span></button>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4M8 14l3 3 5-6"/></svg><span class="navcopy"><span class="lbl">Regressiva</span><span class="navsub">Por data</span></span></button>
     <button role="tab" data-view="history" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1M3 4v4h4M12 7.5V12l3 2"/></svg><span class="lbl">Histórico</span></button>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1M3 4v4h4M12 7.5V12l3 2"/></svg><span class="navcopy"><span class="lbl">Histórico</span><span class="navsub">Registros</span></span></button>
     <button role="tab" data-view="dashboard" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M4 20h16"/></svg><span class="lbl">Painel</span></button>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M4 20h16"/></svg><span class="navcopy"><span class="lbl">Painel</span><span class="navsub">Resumo</span></span></button>
   </nav>
 
   <button class="gear" id="btnSettings" aria-label="Configurações" title="Configurações">
@@ -419,7 +928,7 @@
 
 <main>
   <!-- ============ STOPWATCH ============ -->
-  <section id="view-stopwatch" class="view active" role="tabpanel" aria-label="Cronômetro">
+  <section id="view-stopwatch" class="view" role="tabpanel" aria-label="Cronômetro">
     <div class="stage">
       <div class="dial">
         <svg class="ring" viewBox="0 0 200 200"><circle class="track" cx="100" cy="100" r="92" stroke-width="4"/><circle class="prog" id="sw-ring" cx="100" cy="100" r="92" stroke-width="5" stroke-dasharray="578" stroke-dashoffset="578"/></svg>
@@ -441,7 +950,7 @@
   </section>
 
   <!-- ============ TIMER ============ -->
-  <section id="view-timer" class="view" role="tabpanel" aria-label="Temporizador">
+  <section id="view-timer" class="view active" role="tabpanel" aria-label="Temporizador">
     <!-- setup -->
     <div class="stage" id="timer-setup">
       <div class="setup">
@@ -456,26 +965,33 @@
           </div>
         </div>
         <div class="chips" id="t-presets"></div>
-        <div class="field"><input class="inp" id="t-label" placeholder="Rótulo (ex.: Pomodoro, macarrão, alongamento)" maxlength="60"></div>
-
-        <!-- Subtimer -->
-        <div class="subbox" id="subbox">
+        <!-- Aviso programado -->
+        <div class="subbox on" id="subbox">
           <div class="shead">
             <div>
-              <div class="ttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7.5"/><path d="M12 13V9M9.5 2.5h5"/><path d="M18.5 6.5l1.5-1.5"/></svg>Subtimer com aviso por voz</div>
-              <div class="cap">A cada intervalo, uma voz avisa o tempo que falta no timer principal (o delta).</div>
+              <div class="ttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7.5"/><path d="M12 13V9M9.5 2.5h5"/><path d="M18.5 6.5l1.5-1.5"/></svg>Aviso programado por voz</div>
+              <div class="cap">A programação fica aberta e pronta para configurar.</div>
             </div>
-            <label class="switch"><input type="checkbox" id="sub-on"><span class="tk"></span></label>
+            <span class="sub-open-badge">Sempre aberto</span>
+            <input type="checkbox" id="sub-on" checked hidden>
           </div>
           <div class="subbody">
-            <div class="row2">
-              <div class="mini"><input id="sub-m" inputmode="numeric" value="01" maxlength="2" aria-label="Minutos do subtimer"><small>min</small></div>
-              <span class="mcolon">:</span>
-              <div class="mini"><input id="sub-s" inputmode="numeric" value="00" maxlength="2" aria-label="Segundos do subtimer"><small>seg</small></div>
+            <input type="checkbox" id="sub-rep" checked hidden>
+            <div class="submode" id="sub-mode" role="group" aria-label="Modo do aviso">
+              <button type="button" data-repeat="false">Tempo determinado</button>
+              <button type="button" data-repeat="true" class="on">Repetição</button>
             </div>
-            <div class="subrepeat">
-              <label class="switch"><input type="checkbox" id="sub-rep" checked><span class="tk"></span></label>
-              <span>Repetir o aviso a cada intervalo até o fim</span>
+            <div class="submode-help" id="sub-mode-help">O aviso repete no período definido até o temporizador terminar.</div>
+            <div class="row2">
+              <div class="mini"><input id="sub-m" inputmode="numeric" value="01" maxlength="2" aria-label="Minutos do aviso"><small>min</small></div>
+              <span class="mcolon">:</span>
+              <div class="mini"><input id="sub-s" inputmode="numeric" value="00" maxlength="2" aria-label="Segundos do aviso"><small>seg</small></div>
+            </div>
+            <div class="subfeedback" aria-label="Recursos acionados em cada aviso">
+              <span class="feedback-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 10v1a7 7 0 0 0 14 0v-1"/></svg>Voz</span>
+              <span class="feedback-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM15.5 8.5a5 5 0 0 1 0 7"/></svg>Som</span>
+              <span class="feedback-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M4 7v10M20 7v10"/></svg>Vibração</span>
+              <span class="feedback-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></svg>Tela</span>
             </div>
           </div>
         </div>
@@ -595,7 +1111,7 @@
         </div>
       </div>
       <div class="srow">
-        <div><div style="font-weight:600">Aviso por voz</div><div class="cap">Fala o tempo restante nos avisos do subtimer</div></div>
+        <div><div style="font-weight:600">Aviso por voz</div><div class="cap">Fala o tempo restante nos avisos programados</div></div>
         <label class="switch"><input type="checkbox" id="set-voice" checked><span class="tk"></span></label>
       </div>
       <div class="srow">
@@ -622,6 +1138,44 @@
     </div>
   </div>
 </dialog>
+
+
+
+<!-- ============ ASSISTENTE DE USO ============ -->
+<button class="guide-launch" id="guide-launch" type="button" aria-controls="guide-agent" aria-expanded="false">
+  <span class="gicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M12 3v3"/><rect x="4" y="6" width="16" height="14" rx="4"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><path d="M9 16h6M2 11v4M22 11v4"/></svg></span>
+  <span class="gcopy"><b>Assistente</b><small>Como usar</small></span>
+</button>
+
+<aside class="guide-agent" id="guide-agent" aria-hidden="true" aria-label="Assistente de uso">
+  <header>
+    <div class="guide-title">
+      <span class="guide-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M12 3v3"/><rect x="4" y="6" width="16" height="14" rx="4"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><path d="M9 16h6"/></svg></span>
+      <span><b>Assistente CRONOS</b><span>Guia passo a passo</span></span>
+    </div>
+    <button class="guide-close" id="guide-close" type="button" aria-label="Fechar assistente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </header>
+  <div class="guide-body">
+    <div class="guide-step-label" id="guide-step-label">Etapa 1 de 6</div>
+    <h3 id="guide-step-title">Defina a duração</h3>
+    <p id="guide-step-text"></p>
+    <div class="guide-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span id="guide-step-tip"></span></div>
+    <div class="guide-progress" id="guide-progress" aria-hidden="true"></div>
+  </div>
+  <div class="guide-actions">
+    <button class="guide-btn" id="guide-prev" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>Voltar</button>
+    <button class="guide-btn voice" id="guide-speak" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 10v1a7 7 0 0 0 14 0v-1M12 19v3"/></svg>Ouvir</button>
+    <button class="guide-btn next" id="guide-next" type="button">Próximo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</aside>
+
+<div id="interval-alert" aria-live="assertive" aria-atomic="true">
+  <div class="box">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.5 21a1.7 1.7 0 0 0 3 0"/></svg>
+    <strong id="interval-alert-title">Aviso programado</strong>
+    <span id="interval-alert-text">Faltam 00:00</span>
+  </div>
+</div>
 
 <div class="voicebadge" id="voicebadge" aria-hidden="true"><span class="wave"><i></i><i></i><i></i><i></i></span><span id="voicebadge-txt">Falando…</span></div>
 
@@ -680,7 +1234,12 @@ const audio=(()=>{
   }
   function stop(){on=false;clearTimeout(loop);clearInterval(vibLoop);if(navigator.vibrate)navigator.vibrate(0);}
   function test(){ensure();resume();(patterns[settings.pattern]||patterns.sirene)();}
-  return{ensure,resume,start,stop,test};
+  function ping(){
+    ensure();resume();
+    if(!settings.sound)return;
+    tone(880,0,0.13,'sine',.65);tone(1175,0.17,0.18,'sine',.55);
+  }
+  return{ensure,resume,start,stop,test,ping};
 })();
 
 /* ---------- Notifications ---------- */
@@ -776,7 +1335,7 @@ const TYPE={
    NAVIGATION
 ============================================================ */
 const views=['stopwatch','timer','countdown','history','dashboard'];
-let activeView='stopwatch';
+let activeView='timer';
 function showView(v){
   activeView=v;
   $$('.view').forEach(s=>s.classList.toggle('active',s.id==='view-'+v));
@@ -871,12 +1430,12 @@ function startTimer(fromSetup){
   if(fromSetup){
     const d=readSetup();
     if(d<1000)return toast('Defina um tempo maior que zero');
-    timer.duration=d;timer.remaining=d;timer.label=$('#t-label').value.trim();timer.finished=false;
-    // subtimer config
-    sub.on=subOn.checked;sub.repeat=subRep.checked;sub.interval=readSubInterval();
+    timer.duration=d;timer.remaining=d;timer.label='';timer.finished=false;
+    // configuração do aviso programado
+    subOn.checked=true;sub.on=true;sub.repeat=subRep.checked;sub.interval=readSubInterval();
     sub.count=0;sub.done=false;sub.left=0;sub.endTs=0;avisosEl.innerHTML='';
-    if(sub.on&&sub.interval<1000){sub.on=false;toast('Defina um subtimer maior que zero');}
-    if(sub.on&&sub.interval>=d){sub.on=false;toast('Subtimer ≥ timer: não haverá aviso');}
+    if(sub.on&&sub.interval<1000){sub.on=false;toast('Defina um tempo de aviso maior que zero');}
+    if(sub.on&&sub.interval>=d){sub.on=false;toast('O tempo do aviso precisa ser menor que o temporizador');}
     $('#timer-setup').style.display='none';$('#timer-run').style.display='';
     tLive.textContent=timer.label;
     if(settings.notif&&'Notification'in window&&Notification.permission==='default')requestNotif();
@@ -923,9 +1482,20 @@ tMain.addEventListener('click',timerToggle);
 $('#t-reset').addEventListener('click',resetTimer);
 $('#t-add').addEventListener('click',addTimerMin);
 
-/* ---------- Subtimer (voice delta) ---------- */
+/* ---------- Aviso programado por voz ---------- */
 function readSubInterval(){return((parseInt(subM.value,10)||0)*60+(parseInt(subS.value,10)||0))*1000;}
-subOn.addEventListener('change',()=>{$('#subbox').classList.toggle('on',subOn.checked);});
+subOn.checked=true;$('#subbox').classList.add('on');
+function syncSubMode(){
+  const repeat=subRep.checked;
+  $$('#sub-mode button').forEach(b=>b.classList.toggle('on',(b.dataset.repeat==='true')===repeat));
+  $('#sub-mode-help').textContent=repeat
+    ?'O aviso repete no período definido até o temporizador terminar.'
+    :'O aviso acontece uma vez após o período definido.';
+}
+$('#sub-mode').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-repeat]');if(!b)return;
+  subRep.checked=b.dataset.repeat==='true';syncSubMode();
+});
 [subM,subS].forEach(inp=>inp.addEventListener('blur',()=>{let v=parseInt(inp.value.replace(/\D/g,''),10)||0;const max=inp===subM?99:59;inp.value=pad(Math.min(max,Math.max(0,v)));}));
 function subArm(){
   if(!(sub.on&&timer.running)||sub.done){if(sub.done)subLine.style.display='none';return;}
@@ -941,6 +1511,19 @@ function subTick(){
     subFire();
   }
 }
+let subFeedbackTimer=null;
+function triggerSubFeedback(message){
+  audio.ping();
+  if(navigator.vibrate)navigator.vibrate([180,80,180,80,260]);
+  const overlay=$('#interval-alert');
+  $('#interval-alert-title').textContent=sub.repeat?'Aviso repetido':'Aviso programado';
+  $('#interval-alert-text').textContent=message;
+  overlay.classList.remove('on');document.body.classList.remove('interval-shake');
+  void overlay.offsetWidth;
+  overlay.classList.add('on');document.body.classList.add('interval-shake');
+  clearTimeout(subFeedbackTimer);
+  subFeedbackTimer=setTimeout(()=>{overlay.classList.remove('on');document.body.classList.remove('interval-shake');},1300);
+}
 function subFire(){
   sub.count++;
   const rem=tRemaining(),elapsed=Math.max(0,timer.duration-rem);
@@ -948,11 +1531,12 @@ function subFire(){
     do{sub.endTs+=sub.interval;}while(sub.endTs<=Date.now()+50&&sub.endTs<timer.endTs); // skip missed to avoid bursts
   }else{sub.endTs=0;sub.done=true;subLine.style.display='none';}
   const remTxt=rem>500?('Faltam '+spokenDur(rem)):'Tempo quase esgotado';
-  voice.speak((timer.label?timer.label+'. ':'')+remTxt+'.');
+  triggerSubFeedback(remTxt);
+  voice.speak(remTxt+'.');
   addAviso(sub.count,elapsed,rem);
 }
 function addAviso(n,elapsed,rem){
-  if(!avisosEl.querySelector('.ah'))avisosEl.innerHTML='<div class="ah">Avisos por voz — delta até o fim</div>';
+  if(!avisosEl.querySelector('.ah'))avisosEl.innerHTML='<div class="ah">Histórico de avisos</div>';
   const row=document.createElement('div');row.className='aviso';
   row.innerHTML='<span class="an">#'+n+'</span>'
     +'<svg class="aic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 10v1a7 7 0 0 0 14 0v-1M12 19v3"/></svg>'
@@ -967,16 +1551,15 @@ function saveMem(){store.set('cronos_memories',memories);}
 function renderMems(){
   const box=$('#mem-list');
   if(!memories.length){box.innerHTML='<span class="empty">Nenhuma memória ainda. Ajuste um tempo e toque em “Salvar tempo”.</span>';return;}
-  box.innerHTML=memories.map(m=>`<span class="memchip" data-id="${m.id}" role="button" tabindex="0" title="Carregar tempo"><span class="mn">${esc(m.name)}</span><span class="md">${fmtTimer(m.dur)}${m.subOn?' · sub '+fmtTimer(m.subInt):''}</span><button class="mx" data-del="${m.id}" aria-label="Excluir memória"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
+  box.innerHTML=memories.map(m=>`<span class="memchip" data-id="${m.id}" role="button" tabindex="0" title="Carregar tempo"><span class="mn">${esc(m.name)}</span><span class="md">${fmtTimer(m.dur)}${m.subOn?' · aviso '+fmtTimer(m.subInt):''}</span><button class="mx" data-del="${m.id}" aria-label="Excluir memória"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
 }
 function loadMem(id){
   const m=memories.find(x=>x.id===id);if(!m)return;
   const s=Math.round(m.dur/1000);
   tH.value=pad(Math.floor(s/3600));tM.value=pad(Math.floor(s%3600/60));tS.value=pad(s%60);
-  $('#t-label').value=m.name||'';
-  subOn.checked=!!m.subOn;subRep.checked=m.subRep!==false;
+  subOn.checked=true;subRep.checked=m.subRep!==false;
   const si=Math.round((m.subInt||0)/1000);subM.value=pad(Math.floor(si/60));subS.value=pad(si%60);
-  $('#subbox').classList.toggle('on',subOn.checked);
+  $('#subbox').classList.add('on');syncSubMode();
   toast('Memória carregada');
 }
 $('#mem-list').addEventListener('click',e=>{
@@ -987,11 +1570,12 @@ $('#mem-list').addEventListener('click',e=>{
 $('#mem-list').addEventListener('keydown',e=>{if((e.key==='Enter'||e.code==='Space')){const chip=e.target.closest('.memchip');if(chip){e.preventDefault();loadMem(chip.dataset.id);}}});
 $('#mem-save').addEventListener('click',()=>{
   const dur=readSetup();if(dur<1000)return toast('Defina um tempo para salvar');
-  const label=$('#t-label').value.trim();
-  const rec={id:Date.now()+'_'+Math.random().toString(36).slice(2,6),name:label||fmtTimer(dur),dur,subOn:subOn.checked,subInt:readSubInterval(),subRep:subRep.checked};
+  const rec={id:Date.now()+'_'+Math.random().toString(36).slice(2,6),name:fmtTimer(dur),dur,subOn:true,subInt:readSubInterval(),subRep:subRep.checked};
   memories.unshift(rec);if(memories.length>24)memories.length=24;saveMem();renderMems();toast('Tempo salvo nas memórias');
 });
 renderMems();
+subOn.checked=true;$('#subbox').classList.add('on');
+syncSubMode();
 
 /* ============================================================
    COUNTDOWN (to date)
@@ -1179,6 +1763,88 @@ $('#set-vrate').addEventListener('input',e=>{settings.vrate=+e.target.value;save
 $('#set-voicepick').addEventListener('change',e=>{settings.voiceName=e.target.value;saveSettings();});
 $('#set-vtest').addEventListener('click',()=>voice.test());
 
+
+
+/* ============================================================
+   ASSISTENTE DE USO
+============================================================ */
+const guideSteps=[
+  {
+    title:'Defina a duração',
+    text:'Escolha quantas horas, minutos e segundos o temporizador deve contar.',
+    tip:'Use os botões acima e abaixo dos números ou toque diretamente em cada campo.',
+    target:'#timer-setup .field'
+  },
+  {
+    title:'Escolha o aviso',
+    text:'Selecione Tempo determinado para receber um único aviso ou Repetição para receber avisos durante toda a contagem.',
+    tip:'A programação por voz já fica aberta. Não é necessário ativar nenhuma chave.',
+    target:'#sub-mode'
+  },
+  {
+    title:'Informe o período',
+    text:'Defina depois de quanto tempo a voz, o som, a vibração e o efeito visual devem ser acionados.',
+    tip:'Na repetição, o mesmo período será usado até o temporizador terminar.',
+    target:'.subbody .row2'
+  },
+  {
+    title:'Inicie a contagem',
+    text:'Toque em Iniciar temporizador. A ferramenta começa a contar e prepara automaticamente os avisos configurados.',
+    tip:'O navegador pode exigir um primeiro toque para liberar som e voz.',
+    target:'#t-start'
+  },
+  {
+    title:'Controle o temporizador',
+    text:'Durante a contagem você pode pausar, continuar, adicionar um minuto ou reiniciar.',
+    tip:'O próximo aviso aparece logo abaixo do relógio principal.',
+    target:'#timer-run .controls'
+  },
+  {
+    title:'Use as funções secundárias',
+    text:'A navegação também oferece cronômetro, contagem regressiva, histórico e painel de resultados.',
+    tip:'O Timer permanece em destaque porque é a função principal.',
+    target:'nav.tabs'
+  }
+];
+let guideIndex=0,guideTarget=null;
+const guideAgent=$('#guide-agent'),guideLaunch=$('#guide-launch');
+function clearGuideHighlight(){if(guideTarget){guideTarget.classList.remove('guide-highlight');guideTarget=null;}}
+function renderGuide(){
+  const step=guideSteps[guideIndex];
+  $('#guide-step-label').textContent='Etapa '+(guideIndex+1)+' de '+guideSteps.length;
+  $('#guide-step-title').textContent=step.title;
+  $('#guide-step-text').textContent=step.text;
+  $('#guide-step-tip').textContent=step.tip;
+  $('#guide-prev').disabled=guideIndex===0;
+  $('#guide-next').innerHTML=guideIndex===guideSteps.length-1
+    ?'Concluir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg>'
+    :'Próximo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>';
+  $('#guide-progress').innerHTML=guideSteps.map((_,i)=>'<i class="'+(i<=guideIndex?'on':'')+'"></i>').join('');
+  clearGuideHighlight();
+  const target=$(step.target);
+  if(target&&target.offsetParent!==null){guideTarget=target;target.classList.add('guide-highlight');target.scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'});}
+}
+function openGuide(){
+  guideAgent.classList.add('open');guideAgent.setAttribute('aria-hidden','false');guideLaunch.setAttribute('aria-expanded','true');
+  renderGuide();
+}
+function closeGuide(){
+  guideAgent.classList.remove('open');guideAgent.setAttribute('aria-hidden','true');guideLaunch.setAttribute('aria-expanded','false');
+  clearGuideHighlight();
+  if(spSupported)speechSynthesis.cancel();
+}
+guideLaunch.addEventListener('click',()=>guideAgent.classList.contains('open')?closeGuide():openGuide());
+$('#guide-close').addEventListener('click',closeGuide);
+$('#guide-prev').addEventListener('click',()=>{if(guideIndex>0){guideIndex--;renderGuide();}});
+$('#guide-next').addEventListener('click',()=>{
+  if(guideIndex>=guideSteps.length-1){closeGuide();toast('Guia concluído');return;}
+  guideIndex++;renderGuide();
+});
+$('#guide-speak').addEventListener('click',()=>{
+  const step=guideSteps[guideIndex];
+  voice.speak(step.title+'. '+step.text+' '+step.tip,true);
+});
+
 /* ============================================================
    MAIN LOOP + ticks
 ============================================================ */
@@ -1230,7 +1896,7 @@ document.addEventListener('keydown',e=>{
   const tag=(e.target.tagName||'').toLowerCase();
   if(tag==='input'||tag==='select'||tag==='textarea')return;
   if(alarmActive&&(e.code==='Space'||e.code==='Enter'||e.code==='Escape')){e.preventDefault();stopAlarm();return;}
-  if(dlg.open)return;
+  if(dlg.open||guideAgent.classList.contains('open'))return;
   if(activeView==='stopwatch'){
     if(e.code==='Space'){e.preventDefault();swToggle();}
     else if(e.key==='l'||e.key==='L'){swDoLap();}
